@@ -1,13 +1,5 @@
-import {
-  Box,
-  chakra,
-  Container,
-  Stack,
-  Text,
-  VisuallyHidden,
-} from "@chakra-ui/react";
-import { FaInstagram, FaTwitter, FaYoutube, FaGithub } from "react-icons/fa";
-import { ReactNode } from "react";
+import { Box, Container, Stack, Text } from "@chakra-ui/react";
+import { FaInstagram, FaGithub } from "react-icons/fa";
 import { memo, VFC } from "react";
 import { SocialButton } from "../../atoms/button/SocialButton";
 

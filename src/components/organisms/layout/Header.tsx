@@ -25,16 +25,16 @@ export const Header: VFC = memo(() => {
   // リンク押下
   const onClickAbout = useCallback(() => {
     navigate("/about");
-  }, []);
+  }, [navigate]);
   const onClickProducts = useCallback(() => {
     navigate("/products");
-  }, []);
+  }, [navigate]);
   const onClickSkill = useCallback(() => {
     navigate("/skill");
-  }, []);
+  }, [navigate]);
   const onClickContact = useCallback(() => {
     navigate("/contact");
-  }, []);
+  }, [navigate]);
 
   return (
     <Box>
