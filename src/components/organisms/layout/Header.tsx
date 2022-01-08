@@ -23,9 +23,10 @@ export const Header: VFC = memo(() => {
   const navigate = useNavigate();
 
   // リンク押下
-  const onClickAbout = useCallback(() => {
-    navigate("/about");
+  const onClickHome = useCallback(() => {
+    navigate("/");
   }, [navigate]);
+
   const onClickProducts = useCallback(() => {
     navigate("/products");
   }, [navigate]);
@@ -59,15 +60,15 @@ export const Header: VFC = memo(() => {
           />
         </Flex>
         <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
-          <Text
+          <Link
             textAlign={useBreakpointValue({ base: "center", md: "left" })}
             fontFamily={"heading"}
+            onClick={onClickHome}
           >
             ポートフォリオ
-          </Text>
+          </Link>
           <Flex display={{ base: "none", md: "flex" }} ml={10}>
             <Stack direction={"row"} spacing={4}>
-              <Link onClick={onClickAbout}>About</Link>
               <Link onClick={onClickProducts}>Products</Link>
               <Link onClick={onClickSkill}>Skill</Link>
               <Link onClick={onClickContact}>Contact</Link>
@@ -80,17 +81,6 @@ export const Header: VFC = memo(() => {
           <DrawerContent>
             <DrawerHeader borderBottomWidth={"1px"}>メニュー</DrawerHeader>
             <DrawerBody p={0}>
-              <Button
-                w={"100%"}
-                colorScheme={"white"}
-                color={"gray.800"}
-                onClick={() => {
-                  onClickAbout();
-                  onClose();
-                }}
-              >
-                About
-              </Button>
               <Button
                 w={"100%"}
                 colorScheme={"white"}
