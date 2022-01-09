@@ -1,4 +1,4 @@
-import { memo, VFC } from "react";
+import { memo, useState, VFC } from "react";
 import {
   Box,
   Button,
@@ -19,6 +19,7 @@ import {
 } from "@chakra-ui/react";
 import { BsGithub, BsLinkedin, BsPerson, BsTwitter } from "react-icons/bs";
 import { MdEmail, MdOutlineEmail } from "react-icons/md";
+import { init, send } from "@emailjs/browser";
 
 const confetti = {
   light: {
@@ -30,6 +31,42 @@ const CONFETTI_LIGHT = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 
 export const Contact: VFC = memo(() => {
   const { hasCopied, onCopy } = useClipboard("examole@examole.com");
+
+  const [name, setName] = useState("");
+  const [mail, setMail] = useState("");
+  const [message, setMessage] = useState("");
+
+  const sendEmail = () => {
+    const user_id = "user_JGvw5Ttz0umRYhkr9y7if";
+    const servide_id = "service_cgol31a";
+    const template_id = "template_qtrn9m9";
+    init(user_id);
+    const template_param = {
+      name: name,
+      email: mail,
+      message: message,
+    };
+    send(servide_id, template_id, template_param).then(() => {
+      console.log(template_param);
+      console.log("success to send email");
+    });
+  };
+
+  const onChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setName(e.target.value);
+  };
+  const onChangeMail = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setMail(e.target.value);
+  };
+  const onChangeMessage = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setMessage(e.target.value);
+  };
+  const onSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log("push submit");
+    sendEmail();
+  };
+
   return (
     <Flex
       bg={"gray.100"}
@@ -126,43 +163,55 @@ export const Contact: VFC = memo(() => {
 
                     <InputGroup>
                       <InputLeftElement children={<BsPerson />} />
-                      <Input type="text" name="name" placeholder="Your Name" />
-                    </InputGroup>
-                  </FormControl>
-
-                  <FormControl isRequired>
-                    <FormLabel>Email</FormLabel>
-
-                    <InputGroup>
-                      <InputLeftElement children={<MdOutlineEmail />} />
                       <Input
-                        type="email"
-                        name="email"
-                        placeholder="Your Email"
+                        type="text"
+                        name="name"
+                        placeholder="Your Name"
+                        onChange={onChangeName}
+                        value={name}
                       />
                     </InputGroup>
                   </FormControl>
+                  <form onSubmit={onSubmit}>
+                    <FormControl isRequired>
+                      <FormLabel>Email</FormLabel>
 
-                  <FormControl isRequired>
-                    <FormLabel>Message</FormLabel>
+                      <InputGroup>
+                        <InputLeftElement children={<MdOutlineEmail />} />
+                        <Input
+                          type="email"
+                          name="email"
+                          placeholder="Your Email"
+                          onChange={onChangeMail}
+                          value={mail}
+                        />
+                      </InputGroup>
+                    </FormControl>
 
-                    <Textarea
-                      name="message"
-                      placeholder="Your Message"
-                      rows={6}
-                      resize={"none"}
-                    />
-                  </FormControl>
+                    <FormControl isRequired>
+                      <FormLabel>Message</FormLabel>
 
-                  <Button
-                    colorScheme={"blue"}
-                    bg={"blue.400"}
-                    color={"white"}
-                    _hover={{ bg: "blue.500" }}
-                    isFullWidth
-                  >
-                    Send Message
-                  </Button>
+                      <Textarea
+                        name="message"
+                        placeholder="Your Message"
+                        rows={6}
+                        resize={"none"}
+                        onChange={onChangeMessage}
+                        value={message}
+                      />
+                    </FormControl>
+
+                    <Button
+                      type="submit"
+                      colorScheme={"blue"}
+                      bg={"blue.400"}
+                      color={"white"}
+                      _hover={{ bg: "blue.500" }}
+                      isFullWidth
+                    >
+                      Send Message
+                    </Button>
+                  </form>
                 </VStack>
               </Box>
             </Stack>
